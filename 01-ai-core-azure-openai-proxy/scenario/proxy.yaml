@@ -1,0 +1,54 @@
+apiVersion: ai.sap.com/v1alpha1
+kind: ServingTemplate
+metadata:
+  name: azure-openai-proxy # executable ID, must be unique across your SAP AI Core instance, for example use `server-pipeline-yourname-1234`
+  annotations:  
+    scenarios.ai.sap.com/description: "Azure OpenAI  Proxy"
+    scenarios.ai.sap.com/name: "Azure OpenAI Proxy" # Scenario name should be the use case
+    executables.ai.sap.com/description: "Azure OpenAI Completions Proxy as Inference"
+    executables.ai.sap.com/name: "azure-openai-proxy" # Executable name should describe the workflow in the use case
+  labels:
+    scenarios.ai.sap.com/id: "azure-openai-proxy"
+    ai.sap.com/version: "1.0"
+    ext.ai.sap.com/islm_released_version: "true"
+    ext.ai.sap.com/islm_executable_type: "inference"
+    ext.ai.sap.com/islm_inference_type: "online"
+spec:
+  #imagePullSecrets: # (optional if using a private docker hub repository)
+  # - name: docker-credentials # your docker registry secret
+  inputs:
+    parameters:
+      - name: OPENAI_API_BASE
+        type: string
+      - name: OPENAI_API_KEY
+        type: string
+      - name: DOCKER_NAMESPACE
+        type: string
+  template:
+    apiVersion: "serving.kserve.io/v1beta1"
+    metadata:
+      annotations: |
+        autoscaling.knative.dev/metric: concurrency   # condition when to scale
+        autoscaling.knative.dev/target: 1
+        autoscaling.knative.dev/targetBurstCapacity: 0
+      labels: |
+        ai.sap.com/resourcePlan: starter # computing power
+    spec: |
+      predictor:
+        minReplicas: 1
+        maxReplicas: 1    # how much to scale
+        containers:
+        - name: kserve-container
+          image: "docker.io/{{inputs.parameters.DOCKER_NAMESPACE}}/azure-openai-proxy"
+          ports:
+            - containerPort: 9001    # customizable port
+              protocol: TCP
+          command: ["/bin/sh", "-c"]
+          args:
+            - >
+              set -e && echo "Starting" && gunicorn --chdir /app/src main:app -b 0.0.0.0:9001 # filename `main` flask variable `app`
+          env:
+            - name: OPENAI_API_BASE # name of the environment variable inside Docker container
+              value: "{{inputs.parameters.OPENAI_API_BASE}}"
+            - name: OPENAI_API_KEY # name of the environment variable inside Docker container
+              value: "{{inputs.parameters.OPENAI_API_KEY}}"

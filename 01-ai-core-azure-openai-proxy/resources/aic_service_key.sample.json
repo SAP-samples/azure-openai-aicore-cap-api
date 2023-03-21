@@ -1,0 +1,11 @@
+{
+  "clientid": "",
+  "clientsecret": "",
+  "url": "",
+  "identityzone": "",
+  "identityzoneid": "",
+  "appname": "",
+  "serviceurls": {
+    "AI_API_URL": ""
+  }
+}

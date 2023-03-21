@@ -1,0 +1,66 @@
+{
+    "name": "cap",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "type": "module",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap-cloud-sdk/http-client": "^3.0.1",
+        "@sap/cds": "^6",
+        "express": "^4",
+        "passport": "^0.6.0"
+    },
+    "devDependencies": {
+        "sqlite3": "^5.0.4"
+    },
+    "scripts": {
+        "start": "cds run",
+        "watch": "cds watch --profile hybrid",
+        "build": "mbt build -p=cf -t=./mta_archives --mtar=cap-aicore.mtar",
+        "deploy": "npm run build && cf deploy mta_archives/cap-aicore.mtar"
+    },
+    "engines": {
+        "node": "^16.15"
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "env": {
+            "es2020": true,
+            "node": true,
+            "jest": true,
+            "mocha": true
+        },
+        "globals": {
+            "SELECT": true,
+            "INSERT": true,
+            "UPDATE": true,
+            "DELETE": true,
+            "CREATE": true,
+            "DROP": true,
+            "CDL": true,
+            "CQL": true,
+            "CXL": true,
+            "cds": true
+        },
+        "rules": {
+            "no-console": "off",
+            "require-atomic-updates": "off"
+        }
+    },
+    "cds": {
+        "requires": {
+            "uaa": {
+                "kind": "xsuaa"
+            },
+            "AICoreAzureOpenAIDestination": {
+                "kind": "rest",
+                "credentials": {
+                    "destination": "openai-aicore-api",
+                    "path": "/v2/inference/deployments/dfca248d20fd5cbe"
+                }
+            }
+        }
+    }
+}

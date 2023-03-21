@@ -1,41 +1,58 @@
-# SAP-samples/repository-template
-This default template for SAP Samples repositories includes files for README, LICENSE, and .reuse/dep5. All repositories on github.com/SAP-samples will be created based on this template.
+# Consume OpenAI services (GPT) through CAP & AI Core
 
-# Containing Files
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/azure-openai-aicore-cap-api)](https://api.reuse.software/info/github.com/SAP-samples/azure-openai-aicore-cap-api)
 
-1. The LICENSE file:
-In most cases, the license for SAP sample projects is `Apache 2.0`.
+With AI Core as a proxy for Azure OpenAI Services, we are able to perform prompt engineering, e.g. to add more context in the form of (SAP) documents or to perform input validation. This sample implements parts of the [Reference architecture of an SAP BTP CAP application using GPT Models of OpenAI](https://github.com/SAP/sap-btp-reference-architectures/tree/main/hyperscalers/openai) and serves as a starting point for such a raw proxy and shows how SAP BTP, AI Core can be consumed and exposed via a CAP API.
 
-2. The .reuse/dep5 file: 
-The [Reuse Tool](https://reuse.software/) must be used for your samples project. You can find the .reuse/dep5 in the project initial. Please replace the parts inside the single angle quotation marks < > by the specific information for your repository.
-
-3. The README.md file (this file):
-Please edit this file as it is the primary description file for your project. You can find some placeholder titles for sections below.
-
-# [Title]
-<!-- Please include descriptive title -->
-
-<!--- Register repository https://api.reuse.software/register, then add REUSE badge:
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/REPO-NAME)](https://api.reuse.software/info/github.com/SAP-samples/REPO-NAME)
--->
-
-## Description
-<!-- Please include SEO-friendly description -->
+![Architectural Parts](documentation/resources/architecture.png)
 
 ## Requirements
 
-## Download and Installation
+In order to be able to carry out the steps for setup and deployment, an SAP BTP Subaccount is required, as well as the necessary entitlements. Provision the infrastructure and set the entitlements on SAP BTP by performing the steps of [setup Global Account and Subaccount in order to deploy the respected components](/documentation/00-prerequisites/01-setup-subaccount-cf-aicore.md).
+
+### Prerequisited services and accounts
+
+- SAP BTP Subaccount
+- SAP BTP, AI Core instance
+- SAP BTP, AI Launchpad subscription (recommended)
+- SAP BTP, Cloud Foundry Runtime
+- Destination Service
+- SAP Authorization and Trust Management Service
+- Azure OpenAI Service with Base URL (endpoint) and API Key
+- Docker Hub account (optional)
+
+## Setup & Deployment
+
+This sample is divided into two sub-projects and implements parts of the [Reference architecture of an SAP BTP CAP application using GPT Models of OpenAI](https://github.com/SAP/sap-btp-reference-architectures/tree/main/hyperscalers/openai) as shown and mentioned in the overview. The first describes how a proxy can be created via AI Core to consume Azure OpenAI services and the second part shows how an AI Core inference service (the actual proxy) can be consumed via a CAP API and exposed via an endpoint.
+
+### 1. SAP BTP, AI Core as Proxy for Azure OpenAI Services
+
+1. [Getting started with AI at SAP: SAP BTP, AI Launchpad and SAP BTP, AI Core](/documentation/01-ai-core-azure-openai-proxy/01-ai-sap-getting-started.md)
+2. [Setup Docker Hub account and build & push your Docker Image (optional)](/documentation/01-ai-core-azure-openai-proxy/02-build-push-docker-images.md)
+3. [Register general artifacts on SAP BTP, AI Core and inspect in SAP BTP, AI Launchpad](/documentation/01-ai-core-azure-openai-proxy/03-register-general-artifacts.md)
+4. [Deploy the Inference Service on SAP BTP, AI Core as Proxy for Azure OpenAI Services](/documentation/01-ai-core-azure-openai-proxy/04-setup-deployment-inference-service.md)
+5. [Test and play with deployed service](/documentation/01-ai-core-azure-openai-proxy/05-test-deployed-service.md)
+
+### 2. CAP API: Expose Azure OpenAI Services via SAP BTP, AI Core Proxy
+
+1. [Prepare for CAP API (Clouad Application Programming) deployment](/documentation/02-cap-api/01-prepare-cap-deployment.md)
+2. [Deploy the CAP API](/documentation/02-cap-api/02-deploy-cap-api.md)
+3. [Test CAP Endpoint](/documentation/02-cap-api/03-test-cap-endpoint.md)
 
 ## Known Issues
-<!-- You may simply state "No known issues. -->
+
+No known issues.
 
 ## How to obtain support
+
 [Create an issue](https://github.com/SAP-samples/<repository-name>/issues) in this repository if you find a bug or have questions about the content.
- 
+
 For additional support, [ask a question in SAP Community](https://answers.sap.com/questions/ask.html).
 
 ## Contributing
+
 If you wish to contribute code, offer fixes or improvements, please send a pull request. Due to legal reasons, contributors will be asked to accept a DCO when they create the first pull request to this project. This happens in an automated fashion during the submission process. SAP uses [the standard DCO text of the Linux Foundation](https://developercertificate.org/).
 
 ## License
+
 Copyright (c) 2023 SAP SE or an SAP affiliate company. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSE) file.

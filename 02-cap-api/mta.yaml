@@ -1,0 +1,61 @@
+---
+_schema-version: '3.1'
+ID: cap-aicore
+version: 1.0.0
+description: "A simple CAP project connecting to deployed service of SAP AI Core"
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npx -p @sap/cds-dk cds build --production
+modules:
+  - name: cap-srv
+    type: nodejs
+    path: gen/srv
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm-ci
+    provides:
+      - name: srv-api # required by consumers of CAP services (e.g. approuter)
+        properties:
+          srv-url: ${default-url}
+    requires:
+      - name: cap-aicore-uaa
+      - name: cap-aicore-dest
+resources:
+  # ----------------------- UAA SERVICE ------------------------
+  - name: cap-aicore-uaa
+    # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+
+  # -------------------- DESTINATION SERVICE -------------------
+  - name: cap-aicore-dest
+    # ------------------------------------------------------------
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: destination
+      service-plan: lite
+      config:
+        init_data:
+          instance:
+            existing_destinations_policy: ignore
+            destinations:
+              - Name: openai-aicore-api
+                Description: SAP AI Core deployed service
+                URL: https://api.ai.prod.eu-central-1.aws.ml.hana.ondemand.com
+                URL.headers.AI-Resource-Group: azure-openai-aicore # your resource group
+                URL.headers.Content-Type: application/json
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: OAuth2ClientCredentials
+                tokenServiceURL: https://sceaiml.authentication.eu10.hana.ondemand.com/oauth/token # your token service url of the SAP AI Core instance
+                clientId: DUMMY_ID # enter in cockpit
+                clientSecret: DUMMY_SECRET # enter in cockpit
+                HTML5.DynamicDestination: true

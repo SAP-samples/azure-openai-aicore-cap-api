@@ -1,0 +1,14 @@
+{
+  "repo": {
+    "name": "azure-openai-aicore",
+    "url": "https://github.com/SAP-samples/azure-openai-aicore-cap-api",
+    "username": "<YOUR-GITHUB-USERNAME>",
+    "password": "<YOUR-PERSONAL-ACCESS-TOKEN>"
+  },
+  "app": {
+    "applicationName": "azure-openai-aicore",
+    "repositoryUrl": "https://github.com/SAP-samples/azure-openai-aicore-cap-api",
+    "revision": "HEAD",
+    "path": "01-ai-core-azure-openai-proxy/scenario"
+  }
+}
