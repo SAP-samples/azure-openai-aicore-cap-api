@@ -1,4 +1,4 @@
-# Consume OpenAI services (GPT) through CAP & AI Core
+# Consume OpenAI services (GPT) through CAP & SAP BTP, AI Core
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/azure-openai-aicore-cap-api)](https://api.reuse.software/info/github.com/SAP-samples/azure-openai-aicore-cap-api)
 
