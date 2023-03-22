@@ -16,7 +16,7 @@ To test the action on the deployed CAP API endpoint you can e.g. use the API Pla
 5. Send the request and inspect the response with the generated text:
 
 _What did the SAP consultant say when asked to solve a problem?_
-_Answer: "Let me just SAP it up!_
+_Answer: "Let me just SAP it up!"_
 
 ```JSON
 {

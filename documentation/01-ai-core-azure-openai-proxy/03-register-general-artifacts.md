@@ -48,10 +48,10 @@ repo_json = setup_json["repo"]
 response = ai_api_client.rest_client.post(
 		path="/admin/repositories",
 		body={
-				"name": repo_json["name"],
-				"url": repo_json["url"],
-				"username": repo_json["username"],
-				"password": repo_json["password"]
+            "name": repo_json["name"],
+            "url": repo_json["url"],
+            "username": repo_json["username"],
+            "password": repo_json["password"]
 		}
 )
 print(response)
@@ -66,10 +66,10 @@ app_json = setup_json["app"]
 response = ai_api_client.rest_client.post(
 		path="/admin/applications",
 		body={
-				"applicationName": app_json["applicationName"],
-				"repositoryUrl": app_json["repositoryUrl"],
-				"revision": app_json["revision"],
-				"path": app_json["path"]
+            "applicationName": app_json["applicationName"],
+            "repositoryUrl": app_json["repositoryUrl"],
+            "revision": app_json["revision"],
+            "path": app_json["path"]
 		}
 )
 ```

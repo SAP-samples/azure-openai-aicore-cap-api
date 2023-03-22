@@ -37,7 +37,7 @@ A destination service instance as well as an UAA service instance are attached t
 1. Access the Destination Service on the SAP BTP Cockpit
    ![Destination Service](resources/destination-service.png)
 
-2. Enter client ID and Client Secret
+2. Enter Client ID and Client Secret
    ![Destination Service](resources/destination.png)
 
 On the CAP application, the destination pointing to your proxy is defined in the `package.json` (including the path to your deployed proxy with the deployment id as shown in [Deploy the Inference Service on SAP BTP, AI Core as Proxy for Azure OpenAI Services](/documentation/01-ai-core-azure-openai-proxy/04-setup-deployment-inference-service.md)):
