@@ -54,3 +54,5 @@ Since a subaccount for the purpose of AI Launchpad was already created through t
 booster, it's not necessary to follow the whole guide.
 
 After the service plan is in place, [create a Service Instance of SAP BTP, AI Core](https://help.sap.com/docs/ai-core/ai-core/create-service-instance) and add a respective Service Key to this instance by perfoming the steps described [here](https://help.sap.com/docs/ai-core/ai-core/create-service-key) and add this as a new connection to SAP AI Launchpad following the steps describe [here](https://help.sap.com/docs/ai-launchpad/sap-ai-launchpad/add-connection-to-sap-ai-core).
+
+If not done yet, clone this repository ([SAP-samples/azure-openai-aicore-cap-api](https://github.com/SAP-samples/azure-openai-aicore-cap-api)) to further proceed with setting up the proxy.
