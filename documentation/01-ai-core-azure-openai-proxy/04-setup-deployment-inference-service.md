@@ -1,7 +1,7 @@
 # Setup and Deployment of Inference service in AI Core
 
 To deploy a proxy (as an inference service), you first need to create a serving configuration. It keeps
-information about which scenario to use, what the parameters and artifacts to use as well as some more metadata like the ID of the AI Scenario.
+information about which scenario to use, what the parameters and artifacts to use as well as some more metadata like the ID of the AI Scenario. Please execute the following steps from the [proxy.ipynb](../../01-ai-core-azure-openai-proxy/proxy.ipynb) to achieve the inference deployment.
 
 ## Serving Configuration
 
