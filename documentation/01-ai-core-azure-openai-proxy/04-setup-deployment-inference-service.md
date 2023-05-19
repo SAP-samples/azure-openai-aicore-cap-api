@@ -51,6 +51,9 @@ in AI Launchpad under the ML Operations > Configurations tab:
 
 ![Serving configuration](resources/config-serve.png)
 
+> **Note**
+> To display and interact with the SAP AI Core instance on SAP AI Launchpad, you first need to [add the connection in SAP AI Launchpad to SAP AI Core](https://help.sap.com/docs/ai-launchpad/sap-ai-launchpad/add-connection-to-sap-ai-core).
+
 ## Serve the proxy as inference service
 
 AI Core can now use the information from the serving configuration to finally deploy the service that makes the proxy available for inference requests. To do so,
