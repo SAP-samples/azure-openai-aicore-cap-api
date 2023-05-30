@@ -1,8 +1,8 @@
-# Consume OpenAI services (GPT) through CAP & SAP BTP, AI Core
+# Consume OpenAI services (GPT) through CAP & SAP AI Core
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/azure-openai-aicore-cap-api)](https://api.reuse.software/info/github.com/SAP-samples/azure-openai-aicore-cap-api)
 
-With AI Core as a proxy for Azure OpenAI Services, we are able to perform prompt engineering, e.g. to add more context in the form of (SAP) documents or to perform input validation. This sample implements parts of the [Reference architecture of an SAP BTP CAP application using GPT Models of OpenAI](https://github.com/SAP/sap-btp-reference-architectures/tree/main/hyperscalers/openai) and serves as a starting point for such a raw proxy and shows how SAP BTP, AI Core can be consumed and exposed via a CAP API.
+With AI Core as a proxy for Azure OpenAI Services, we are able to perform prompt engineering, e.g. to add more context in the form of (SAP) documents or to perform input validation. This sample implements parts of the [Reference architecture of an SAP BTP CAP application using GPT Models of OpenAI](https://github.com/SAP/sap-btp-reference-architectures/tree/main/hyperscalers/openai) and serves as a starting point for such a raw proxy and shows how SAP AI Core can be consumed and exposed via a CAP API.
 
 ![Architectural Parts](documentation/resources/architecture.png)
 
@@ -13,8 +13,8 @@ In order to be able to carry out the steps for setup and deployment, an SAP BTP 
 ### Prerequisited services and accounts
 
 - SAP BTP Subaccount
-- SAP BTP, AI Core instance
-- SAP BTP, AI Launchpad subscription (recommended)
+- SAP AI Core instance
+- SAP AI Launchpad subscription (recommended)
 - SAP BTP, Cloud Foundry Runtime
 - Destination Service
 - SAP Authorization and Trust Management Service
@@ -25,19 +25,19 @@ In order to be able to carry out the steps for setup and deployment, an SAP BTP 
 
 This sample is divided into two sub-projects and implements parts of the [Reference architecture of an SAP BTP CAP application using GPT Models of OpenAI](https://github.com/SAP/sap-btp-reference-architectures/tree/main/hyperscalers/openai) as shown and mentioned in the overview. The first describes how a proxy can be created via AI Core to consume Azure OpenAI services and the second part shows how an AI Core inference service (the actual proxy) can be consumed via a CAP API and exposed via an endpoint.
 
-### 1. SAP BTP, AI Core as Proxy for Azure OpenAI Services
+### 1. SAP AI Core as Proxy for Azure OpenAI Services
 
-1. [Getting started with AI at SAP: SAP BTP, AI Launchpad and SAP BTP, AI Core](/documentation/01-ai-core-azure-openai-proxy/01-ai-sap-getting-started.md)
+1. [Getting started with AI at SAP: SAP AI Launchpad and SAP AI Core](/documentation/01-ai-core-azure-openai-proxy/01-ai-sap-getting-started.md)
 2. [Setup Docker Hub account and build & push your Docker Image (optional)](/documentation/01-ai-core-azure-openai-proxy/02-build-push-docker-images.md)
-3. [Register general artifacts on SAP BTP, AI Core and inspect in SAP BTP, AI Launchpad](/documentation/01-ai-core-azure-openai-proxy/03-register-general-artifacts.md)
-4. [Deploy the Inference Service on SAP BTP, AI Core as Proxy for Azure OpenAI Services](/documentation/01-ai-core-azure-openai-proxy/04-setup-deployment-inference-service.md)
+3. [Register general artifacts on SAP AI Core and inspect in SAP AI Launchpad](/documentation/01-ai-core-azure-openai-proxy/03-register-general-artifacts.md)
+4. [Deploy the Inference Service on SAP AI Core as Proxy for Azure OpenAI Services](/documentation/01-ai-core-azure-openai-proxy/04-setup-deployment-inference-service.md)
 5. [Test and play with deployed service](/documentation/01-ai-core-azure-openai-proxy/05-test-deployed-service.md)
 
-### 2. CAP API: Expose Azure OpenAI Services via SAP BTP, AI Core Proxy
+### 2. CAP API: Expose Azure OpenAI Services via SAP AI Core Proxy
 
 1. [Prepare for CAP API (Cloud Application Programming) deployment](/documentation/02-cap-api/01-prepare-cap-deployment.md)
 2. [Deploy the CAP API](/documentation/02-cap-api/02-deploy-cap-api.md)
-3. [Attach SAP BTP, AI Core to CAP via Destination](/documentation/02-cap-api/03-attach-aicore.md)
+3. [Attach SAP AI Core to CAP via Destination](/documentation/02-cap-api/03-attach-aicore.md)
 4. [Test CAP Endpoint](/documentation/02-cap-api/04-test-cap-endpoint.md)
 
 ## Known Issues

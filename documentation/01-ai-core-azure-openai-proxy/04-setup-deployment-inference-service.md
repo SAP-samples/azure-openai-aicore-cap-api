@@ -1,7 +1,7 @@
 # Setup and Deployment of Inference service in AI Core
 
 To deploy a proxy (as an inference service), you first need to create a serving configuration. It keeps
-information about which scenario to use, what the parameters and artifacts to use as well as some more metadata like the ID of the AI Scenario.
+information about which scenario to use, what the parameters and artifacts to use as well as some more metadata like the ID of the AI Scenario. Please execute the following steps from the [proxy.ipynb](../../01-ai-core-azure-openai-proxy/proxy.ipynb) to achieve the inference deployment.
 
 ## Serving Configuration
 
@@ -50,6 +50,9 @@ If the serving configuration has been created successfully, it should show up
 in AI Launchpad under the ML Operations > Configurations tab:
 
 ![Serving configuration](resources/config-serve.png)
+
+> **Note**
+> To display and interact with the SAP AI Core instance on SAP AI Launchpad, you first need to [add the connection in SAP AI Launchpad to SAP AI Core](https://help.sap.com/docs/ai-launchpad/sap-ai-launchpad/add-connection-to-sap-ai-core).
 
 ## Serve the proxy as inference service
 

@@ -43,9 +43,9 @@ The Overview of the Subaccount gives you a summary like metadata or spaces withi
 Navigate to the _Instances and Subscriptions_ to see the subscription to SAP AI Launchpad.
 ![Instances & Subscriptions](resources/instances_overview.png)
 
-## Add Service Plans for SAP BTP, AI Core
+## Add Service Plans for SAP AI Core
 
-To create service instances of SAP BTP, AI Core on a subaccount, one first has to add the respective service plan and give entitlements.
+To create service instances of SAP AI Core on a subaccount, one first has to add the respective service plan and give entitlements.
 
 Follow the procedure from [Add a Service Plan](https://help.sap.com/docs/AI_CORE/2d6c5984063c40a59eda62f4a9135bee/86002d926eba4fb9ba0a80e342af7295.html?locale=en-US) on
 from the overall guide [Provision AI Core (incl.
@@ -53,4 +53,6 @@ Subaccount)](https://help.sap.com/docs/AI_CORE/2d6c5984063c40a59eda62f4a9135bee/
 Since a subaccount for the purpose of AI Launchpad was already created through the
 booster, it's not necessary to follow the whole guide.
 
-After the service plan is in place, [create a Service Instance of SAP BTP, AI Core](https://help.sap.com/docs/ai-core/ai-core/create-service-instance) and add a respective Service Key to this instance by perfoming the steps described [here](https://help.sap.com/docs/ai-core/ai-core/create-service-key)
+After the service plan is in place, [create a Service Instance of SAP AI Core](https://help.sap.com/docs/ai-core/ai-core/create-service-instance) and add a respective Service Key to this instance by perfoming the steps described [here](https://help.sap.com/docs/ai-core/ai-core/create-service-key) and add this as a new connection to SAP AI Launchpad following the steps describe [here](https://help.sap.com/docs/ai-launchpad/sap-ai-launchpad/add-connection-to-sap-ai-core).
+
+If not done yet, clone this repository ([SAP-samples/azure-openai-aicore-cap-api](https://github.com/SAP-samples/azure-openai-aicore-cap-api)) to further proceed with setting up the proxy.

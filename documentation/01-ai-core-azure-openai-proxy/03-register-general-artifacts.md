@@ -1,6 +1,6 @@
 # Register general Artifacts for Deployment in AI Core
 
-Before you can start to train the model, you will first need to register different
+Before you can start to interact with SAP AI Core, you will first need to register different
 artifacts for your AI Core instance. These artifacts include setup details and credentials
 that AI Core needs in order to proceed. Duplicate the json files in the `/resources` directory, enter your attributes as well as credentials and remove the `.sample` appendix to:
 
@@ -10,11 +10,11 @@ that AI Core needs in order to proceed. Duplicate the json files in the `/resour
 - `docker_secret.json`: Your Docker secret (optional, if you use your own docker image and the related repository is set to private). Make sure to use a Docker Hub Personal Access Token
   (PAT) instead of your normal Docker Hub password. The AI Core instance needs this secret
   to pull the docker images from your Docker Hub repository later on for training and serving.
-- `env.json`: Environment variblaes for specifying the Docker namespace and Azure OpenAI services details (BYOA)
+- `env.json`: Environment variblaes for specifying the Docker namespace (of the built Docker image) and Azure OpenAI services details (BYOA; Bring your own Account). To further proceed, it is mandatory to have an Azure OpenAI Services endpoint and API Key.
 
-Next, follow the first few steps inside the [proxy.ipynb](../../01-ai-core-azure-openai-proxy/proxy.ipynb) file. In the
-following steps the AI API Python SDK is used to interact with the AI Core instance and
-the AI API.
+Next, follow and execute the first few steps inside the [proxy.ipynb](../../01-ai-core-azure-openai-proxy/proxy.ipynb) file. In the
+following steps, the AI API Python SDK is used to interact with the AI Core instance and
+the AI API. The jupyter notebook can be executed from e.g., [Visual Studio Code](https://code.visualstudio.com/docs/datascience/jupyter-notebooks) or [running on a jupyter notebook server](https://jupyter-notebook.readthedocs.io/en/stable/public_server.html).
 
 ## Connect to your AI Core instance
 

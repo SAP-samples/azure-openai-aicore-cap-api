@@ -1,8 +1,8 @@
-# Attach SAP BTP, AI Core to CAP via Destination
+# Attach SAP AI Core to CAP via Destination
 
 In the following parts, it's explained how the CAP boilerplate code needs to be extended to consume the inference service (proxy) of SAP BTP AI Core and expose it as an [action](https://cap.cloud.sap/docs/guides/providing-services#actions-and-functions) via an endpoint.
 
-A destination service instance as well as an UAA service instance are attached to your CAP application in the `mta.yaml`. During the initial deployment, there is a destination with the neccessary information created which needs to get completed in the cockpit itself by entering the Client ID and Client Secret of your AI Core service key (see [Register general artifacts on SAP BTP, AI Core and inspect in SAP BTP, AI Launchpad](/documentation/01-ai-core-azure-openai-proxy/03-register-general-artifacts.md)):
+A destination service instance as well as an UAA service instance are attached to your CAP application in the `mta.yaml`. During the initial deployment, there is a destination with the neccessary information created which needs to get completed in the cockpit itself by entering the Client ID and Client Secret of your AI Core service key (see [Register general artifacts on SAP AI Core and inspect in SAP AI Launchpad](/documentation/01-ai-core-azure-openai-proxy/03-register-general-artifacts.md)):
 
 ```yaml
 ---

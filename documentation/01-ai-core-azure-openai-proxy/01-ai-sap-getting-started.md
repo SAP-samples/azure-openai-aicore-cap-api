@@ -18,7 +18,7 @@ Python SDK](https://pypi.org/project/ai-core-sdk/) in order to interact with AI 
 
 # Get to know SAP AI Launchpad
 
-SAP BTP, AI Launchpad is an application in SAP BTP. With it, one
+SAP AI Launchpad is an application in SAP BTP. With it, one
 can overview one's own AI use case having the convenience of a user interface in the
 browser. It showcases artifacts that are relevant to your use case like the dataset used
 for training and the trained model. Further one can observe the training and serving
