@@ -1,6 +1,6 @@
 # Test the deployed Inference service
 
-Now that the inference service (proxy) is running, send a request with the prompt, your engine (Azure OpenAI services deployment ID) and additional parameters for the model to the service and receive the OpenAI model response. You can use the following code snippet for that:
+Now that the inference service (proxy) is running, send a request with the prompt, your engine (Azure OpenAI services deployment ID) and additional parameters for the model to the service and receive the OpenAI model response. You can use the following code snippet from the [proxy.ipynb](../../01-ai-core-azure-openai-proxy/proxy.ipynb) for that:
 
 > **Note**
 > When it comes to an inference request, make sure to change the **engine** to your deployment id of the respected OpenAI service from Azure.
@@ -28,7 +28,7 @@ print("Inference result:", response.json())
 pprint(vars(response))
 ```
 
-Once you are done with testing and you don't need the proxy anymore, you could kill the deployment to save resources, by running this code:
+Once you are done with testing and you don't need the proxy anymore, you could kill the deployment to save resources, by running this code from [proxy.ipynb](../../01-ai-core-azure-openai-proxy/proxy.ipynb):
 
 ```python
 delete_resp = ai_api_v2_client.deployment.modify(deployment_resp.id,
