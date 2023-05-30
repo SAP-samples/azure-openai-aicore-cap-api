@@ -1,8 +1,8 @@
 # Prepare the CAP API sample for Deployment
 
-Once the proxy via SAP BTP, AI Core is running ([see steps here](/01-ai-core-azure-openai-proxy/README.md)), you are able to prepare the CAP API sample in order to deploy it to a SAP BTP, Cloud Foundry Runtime in your Subaccount.
+Once the proxy via SAP AI Core is running ([see steps here](/01-ai-core-azure-openai-proxy/README.md)), you are able to prepare the CAP API sample in order to deploy it to a SAP BTP, Cloud Foundry Runtime in your Subaccount.
 
-On the CAP application, the destination pointing to your proxy is defined in the `package.json` (including the path to your deployed proxy with the deployment id as shown in [Deploy the Inference Service on SAP BTP, AI Core as Proxy for Azure OpenAI Services](/documentation/01-ai-core-azure-openai-proxy/04-setup-deployment-inference-service.md)):
+On the CAP application, the destination pointing to your proxy is defined in the `package.json` (including the path to your deployed proxy with the deployment id as shown in [Deploy the Inference Service on SAP AI Core as Proxy for Azure OpenAI Services](/documentation/01-ai-core-azure-openai-proxy/04-setup-deployment-inference-service.md)):
 
 ```json
 {

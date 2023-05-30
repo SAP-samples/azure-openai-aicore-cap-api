@@ -1,4 +1,4 @@
-## CAP API: Expose Azure OpenAI Services via SAP BTP, AI Core Proxy
+## CAP API: Expose Azure OpenAI Services via SAP AI Core Proxy
 
 0. [CAP overview](../documentation/02-cap-api/00-cap-overview.md)
 1. [Prepare for CAP API (Clouad Application Programming) deployment](../documentation/02-cap-api/01-prepare-cap-deployment.md)
