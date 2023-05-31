@@ -1,11 +1,3 @@
-### COMPLETION
-POST http://localhost:4004/ai/aiCompletionProxy
-Content-Type: application/json
-
-{
-    "prompt": "Tell me a joke about SAP technology"
-}
-
 ### CHAT COMPLETION FOR NON-CHAT USE CASES (see https://github.com/openai/openai-python/blob/main/chatml.md#non-chat-use-cases)
 POST http://localhost:4004/ai/aiChatCompletionProxy
 Content-Type: application/json

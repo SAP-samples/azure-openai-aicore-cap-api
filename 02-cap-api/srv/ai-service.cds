@@ -5,6 +5,5 @@ service AIService {
         text : String;
     }
 
-    action aiCompletionProxy(prompt : String)     returns GPTTextResponse;
     action aiChatCompletionProxy(prompt : String) returns GPTTextResponse;
 }
