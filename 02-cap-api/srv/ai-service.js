@@ -1,7 +1,7 @@
 import cds from "@sap/cds";
 
 // PARAMETERS FOR AZURE OPENAI SERVICES COMPLETION API
-const ENGINE = "ic2023q2davinci";
+const ENGINE = "YOUR_ENGINE_OF_AZURE_OPENAI_SERVICES"; // DEPLOYMENT ID FOR DAVINCI
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.8;
 const FREQUENCY_PENALTY = 0;
@@ -11,7 +11,7 @@ const BEST_OF = 1;
 const STOP_SEQUENCE = null;
 
 // PARAMETERS FOR AZURE OPENAI SERVICES CHAT COMPLETION API
-const ENGINE_GPT_35_TURBO = "ic2023q2gpt"; // DEPLOYMENT ID FOR GPT-3.5-TURBO
+const ENGINE_GPT_35_TURBO = "YOUR_ENGINE_OF_AZURE_OPENAI_SERVICES"; // DEPLOYMENT ID FOR GPT-3.5-TURBO
 
 const GPT_PARAMS = {
     deployment_id: ENGINE,
@@ -49,13 +49,10 @@ export class AIService extends cds.ApplicationService {
      */
     aiCompletionProxyAction = async (req) => {
         const { prompt } = req.data;
-        const response = await this.callAIProxy(prompt);
+        const response = await this.callCompletionAIProxy(prompt);
+
         return { text: response["choices"][0].text };
     };
-
-    /**
-     *
-     */
 
     /**
      * Forwards prompt of the payload via a destination (mapped as AICoreAzureOpenAIDestination) through an SAP AI Core deployed service to Azure OpenAI services
@@ -80,6 +77,10 @@ export class AIService extends cds.ApplicationService {
     /**
      * ========================
      * CHAT COMPLETION (see https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference#chat-completions)
+     *
+     * !!! Note: The following action currently supports only non-chat use cases.
+     * !!! For chat based use cases the payload of the messages needs to be adjusted (see https://platform.openai.com/docs/guides/chat)
+     * !!! Also have a look at the markup lang ChatML of OpenAI https://github.com/openai/openai-python/blob/main/chatml.md
      * ========================
      */
 
@@ -91,8 +92,8 @@ export class AIService extends cds.ApplicationService {
      */
     aiChatCompletionProxyAction = async (req) => {
         const { prompt } = req.data;
-        const response = await this.callAIProxy(prompt);
-        return { text: response["choices"][0].message };
+        const response = await this.callChatCompletionAIProxy(prompt);
+        return { text: response["choices"][0].message.content };
     };
 
     /**
