@@ -49,6 +49,14 @@
             "require-atomic-updates": "off"
         }
     },
+    "prettier": {
+        "arrowParens": "always",
+        "tabWidth": 4,
+        "semi": true,
+        "singleQuote": false,
+        "trailingComma": "none",
+        "printWidth": 120
+    },
     "cds": {
         "requires": {
             "uaa": {
@@ -58,7 +66,7 @@
                 "kind": "rest",
                 "credentials": {
                     "destination": "openai-aicore-api",
-                    "path": "/v2/inference/deployments/dfca248d20fd5cbe"
+                    "path": "/v2/inference/deployments/<YOUR_AICORE_DEPLOYMENT_ID>"
                 }
             }
         }
