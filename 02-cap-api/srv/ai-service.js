@@ -62,7 +62,6 @@ export class AIService extends cds.ApplicationService {
      */
     callCompletionAIProxy = async (prompt) => {
         const openai = await cds.connect.to("AICoreAzureOpenAIDestination");
-        console.log(prompt);
         const payload = {
             ...GPT_PARAMS,
             prompt: prompt
