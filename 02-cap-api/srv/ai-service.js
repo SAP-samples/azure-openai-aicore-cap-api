@@ -24,7 +24,7 @@ export class AIService extends cds.ApplicationService {
      */
     async init() {
         await super.init();
-        this.on("aiChatCompletionProxy", this.aiChatCompletionProxyAction);
+        this.on("aiProxy", this.aiProxyAction);
     }
 
     /**
@@ -43,9 +43,9 @@ export class AIService extends cds.ApplicationService {
      * @param {Request} req
      * @returns GPTTextResponse { text : string }
      */
-    aiChatCompletionProxyAction = async (req) => {
+    aiProxyAction = async (req) => {
         const { prompt } = req.data;
-        const response = await this.callChatCompletionAIProxy(prompt);
+        const response = await this.callAIProxy(prompt);
         return { text: response["choices"][0].message.content };
     };
 
@@ -55,7 +55,7 @@ export class AIService extends cds.ApplicationService {
      * @param {string} prompt
      * @returns raw response from Azure OpenAI services for Completions (see https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference#example-response-2)
      */
-    callChatCompletionAIProxy = async (prompt) => {
+    callAIProxy = async (prompt) => {
         const openai = await cds.connect.to("AICoreAzureOpenAIDestination");
         const payload = {
             ...GPT_PARAMS,
