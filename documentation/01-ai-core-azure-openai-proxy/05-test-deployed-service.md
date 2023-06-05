@@ -6,19 +6,31 @@ Now that the inference service (proxy) is running, send a request with the promp
 > When it comes to an inference request, make sure to change the **engine** to your deployment id of the respected OpenAI service from Azure.
 
 ```python
-body = {
-    "engine": "<YOUR ENGINE>", # include your engine from a deployment of an Azure OpenAI services model
-    "prompt": "Classify the following news article into 1 of the following categories: categories: [Business, Tech, Politics, Sport, Entertainment]\n\nnews article: Donna Steffensen Is Cooking Up a New Kind of Perfection. The Internet’s most beloved cooking guru has a buzzy new book and a fresh new perspective:\n\nClassified category:",
-    "max_tokens": 60,
-    "temperature": 0,
-    "frequency_penalty": 0,
-    "presence_penalty": 0,
-    "top_p": 1,
-    "best_of": 1,
-    "stop": "null"
-}
-
-endpoint = f"{deployment.deployment_url}/v2/completion"
+legacy_davinci = False # set True if you have a davinci model deployment on Azure OpenAI Services
+if legacy_davinci:
+    body = {
+        "engine": "<YOUR ENGINE>", # include your davinci engine from a deployment of an Azure OpenAI services model
+        "prompt": "Classify the following news article into 1 of the following categories: categories: [Business, Tech, Politics, Sport, Entertainment]\n\nnews article: Donna Steffensen Is Cooking Up a New Kind of Perfection. The Internet’s most beloved cooking guru has a buzzy new book and a fresh new perspective:\n\nClassified category:",
+        "max_tokens": 60,
+        "temperature": 0,
+        "frequency_penalty": 0,
+        "presence_penalty": 0,
+        "top_p": 1,
+        "best_of": 1,
+        "stop": "null"
+    }
+    endpoint = f"{deployment.deployment_url}/v2/completion"
+else:
+    body = {
+        "engine": "<YOUR ENGINE>", # include your engine from a deployment of an Azure OpenAI services model
+        "prompt": "Classify the following news article into 1 of the following categories: categories: [Business, Tech, Politics, Sport, Entertainment]\n\nnews article: Donna Steffensen Is Cooking Up a New Kind of Perfection. The Internet’s most beloved cooking guru has a buzzy new book and a fresh new perspective:\n\nClassified category:",
+        "max_tokens": 60,
+        "temperature": 0,
+        "frequency_penalty": 0,
+        "presence_penalty": 0,
+        "stop": "null"
+    }
+    endpoint = f"{deployment.deployment_url}/v2/chat-completion"
 headers = {"Authorization": ai_api_v2_client.rest_client.get_token(),
            "ai-resource-group": resource_group,
            "Content-Type": "application/json"}

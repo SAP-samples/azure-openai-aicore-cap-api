@@ -1,4 +1,4 @@
-//@requires: 'authenticated-user'
+@requires: 'authenticated-user'
 service AIService {
 
     type GPTTextResponse {
