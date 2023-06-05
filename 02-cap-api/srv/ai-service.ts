@@ -1,24 +1,20 @@
 import { ApplicationService } from "@sap/cds";
 import { Request } from "@sap/cds/apis/services";
 
-// PARAMETERS FOR AZURE OPENAI SERVICES
-const ENGINE = "YOUR_ENGINE_OF_AZURE_OPENAI_SERVICES";
+// PARAMETERS FOR AZURE OPENAI SERVICES CHAT COMPLETION API
+const ENGINE = "YOUR_ENGINE_OF_AZURE_OPENAI_SERVICES"; // DEPLOYMENT ID FOR GPT-3.5-TURBO
 const MAX_TOKENS = 500;
 const TEMPERATURE = 0.8;
 const FREQUENCY_PENALTY = 0;
 const PRESENCE_PENALTY = 0;
-const TOP_P = 0.5;
-// const BEST_OF = 1; // not avaialble for gpt-3.5-turbo
 const STOP_SEQUENCE = null;
 
 const GPT_PARAMS = {
-    engine: ENGINE,
+    deployment_id: ENGINE,
     max_tokens: MAX_TOKENS,
     temperature: TEMPERATURE,
     frequency_penalty: FREQUENCY_PENALTY,
     presence_penalty: PRESENCE_PENALTY,
-    top_p: TOP_P,
-    // best_of: BEST_OF, // not avaialble for gpt-3.5-turbo
     stop: STOP_SEQUENCE
 };
 
@@ -27,34 +23,52 @@ export class AIService extends ApplicationService {
     /**
      * Define handlers for CAP actions
      */
-    async init(): Promise<void> {
+    async init() {
         await super.init();
         this.on("aiProxy", this.aiProxyAction);
     }
 
     /**
-     * Action forwarding prompt to through AI Core provided proxy
+     * ========================
+     * CHAT COMPLETION (see https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference#chat-completions)
+     *
+     * !!! Note: The following action currently supports only non-chat use cases.
+     * !!! For chat based use cases the payload of the messages needs to be adjusted (see https://platform.openai.com/docs/guides/chat)
+     * !!! Also have a look at the markup lang ChatML of OpenAI https://github.com/openai/openai-python/blob/main/chatml.md
+     * ========================
      */
-    private aiProxyAction = async (req: Request): Promise<any | undefined> => {
+
+    /**
+     * Action forwarding prompt to Azure OpenAI services through SAP AI Core provided proxy
+     *
+     * @param {Request} req
+     * @returns GPTTextResponse { text : string }
+     */
+    private aiProxyAction = async (req: Request): Promise<{ text: string } | undefined> => {
         const { prompt } = req.data;
         const response = await this.callAIProxy(prompt);
-        return { text: response["choices"][0].text };
+        return { text: response["choices"][0].message.content };
     };
 
     /**
-     * Forwards prompt of the payload via a destination (mapped as AICoreAzureOpenAIDestination) through an AI Core deployed service to Azure OpenAI services
+     * Forwards prompt of the payload via a destination (mapped as AICoreAzureOpenAIDestination) through an SAP AI Core deployed service to Azure OpenAI services
+     *
+     * @param {string} prompt
+     * @returns raw response from Azure OpenAI services for Completions (see https://learn.microsoft.com/en-us/azure/cognitive-services/openai/reference#example-response-2)
      */
     private callAIProxy = async (prompt: string): Promise<any | undefined> => {
         const openai = await cds.connect.to("AICoreAzureOpenAIDestination");
-        const payload: any = {
+        const payload = {
             ...GPT_PARAMS,
-            prompt: prompt
+            messages: [
+                { role: "system", content: "Assistant is a large language model trained by OpenAI" },
+                { role: "user", content: prompt }
+            ]
         };
-
         // @ts-ignore
-        const response: any = await openai.send({
+        const response = await openai.send({
             // @ts-ignore
-            query: "POST /v2/completion",
+            query: "POST /v2/chat-completion",
             data: payload
         });
         return response;
