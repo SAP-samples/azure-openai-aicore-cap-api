@@ -200,5 +200,5 @@ mta_archives/
 *.flattened-pom.xml
 
 # IDEs
-# .vscode
+.vscode
 # .idea
