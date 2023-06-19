@@ -10,40 +10,30 @@ to use for serving. Further, one has to specify what artifacts and parameters to
 in this case is paremeters for the docker repository as well as for the Azure OpenAI service. To create the configuration, execute the following code:
 
 ```python
-# Create another AI API client to use different base url.
-ai_api_v2_client = AIAPIV2Client(
-    base_url=aic_service_key["serviceurls"]["AI_API_URL"] + "/v2/lm",
-    auth_url=aic_service_key["url"] + "/oauth/token",
-    client_id=aic_service_key["clientid"],
-    client_secret=aic_service_key["clientsecret"],
-    resource_group=resource_group)
-
-with open(serving_workflow_file) as swf:
-    serving_workflow = yaml.safe_load(swf)
-
-scenario_id = serving_workflow["metadata"]["labels"]["scenarios.ai.sap.com/id"]
-executable_name = serving_workflow["metadata"]["name"]
-
 with open(env_file_path) as efp:
-    environment_values = json.load(efp)
+    env_val = json.load(efp)
 
-parameter_bindings = [ParameterBinding(key=key, value=value) for key, value in environment_values.items()]
+OPENAI_API_BASE = env_val["OPENAI_API_BASE"]
+OPENAI_API_KEY = env_val["OPENAI_API_KEY"]
+DOCKER_NAMESPACE = env_val["DOCKER_NAMESPACE"]
+
+# No modification required in below snippet
+response = ai_core_client.configuration.create(
+    name = "azure-proxy-serve",
+    scenario_id = "azure-openai-proxy",
+    executable_id = "azure-openai-proxy",
+    input_artifact_bindings = [],
+    parameter_bindings = [
+        ParameterBinding(key = "OPENAI_API_BASE", value = OPENAI_API_BASE),
+        ParameterBinding(key = "OPENAI_API_KEY", value = OPENAI_API_KEY), 
+        ParameterBinding(key = "DOCKER_NAMESPACE", value = DOCKER_NAMESPACE)
+    ],
+    resource_group = resource_group_id
+)
 
 
-serve_configuration = {
-    "name": f"{resource_group}-serve",
-    "scenario_id": scenario_id,
-    "executable_id": executable_name,
-    "parameter_bindings": parameter_bindings,
-    "input_artifact_bindings": []
-}
-
-serve_config_resp = ai_api_v2_client.configuration.create(**serve_configuration)
-
-assert serve_config_resp.message == "Configuration created"
-
-pprint(vars(serve_config_resp))
-print("configuration for serving the model created")
+serve_config_resp = response
+print(response.__dict__)
 ```
 
 If the serving configuration has been created successfully, it should show up
@@ -60,15 +50,29 @@ AI Core can now use the information from the serving configuration to finally de
 run this code:
 
 ```python
-deployment_resp = ai_api_v2_client.deployment.create(serve_config_resp.id)
-pprint(vars(deployment_resp))
+# Start proxy
+response = ai_core_client.deployment.create(
+    configuration_id=serve_config_resp.id,
+    resource_group=resource_group_id
+)
 
+deployment_resp = response
+print(response.__dict__)
+```
+
+```python
 # Poll deployment status.
+# No modification required in below snipet
 status = None
 while status != Status.RUNNING and status != Status.DEAD:
     time.sleep(5)
     clear_output(wait=True)
-    deployment = ai_api_v2_client.deployment.get(deployment_resp.id)
+    # Get Status
+    #
+    deployment = response = ai_core_client.deployment.get(
+        deployment_id=deployment_resp.id,
+        resource_group=resource_group_id
+    )
     status = deployment.status
     print("...... deployment status ......", flush=True)
     print(deployment.status)

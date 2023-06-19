@@ -1,14 +1,5 @@
 {
-  "repo": {
-    "name": "azure-openai-aicore",
-    "url": "https://github.com/SAP-samples/azure-openai-aicore-cap-api",
-    "username": "<YOUR-GITHUB-USERNAME>",
-    "password": "<YOUR-PERSONAL-ACCESS-TOKEN>"
-  },
-  "app": {
-    "applicationName": "azure-openai-aicore",
-    "repositoryUrl": "https://github.com/SAP-samples/azure-openai-aicore-cap-api",
-    "revision": "HEAD",
-    "path": "01-ai-core-azure-openai-proxy/scenario"
-  }
+   "username": "<YOUR-GITHUB-USERNAME>",
+   "password": "<YOUR-PERSONAL-ACCESS-TOKEN-(PAT)>",
+   "_help_password": "To generate PAT refer https://developers.sap.com/tutorials/ai-core-helloworld.html#7ab4912e-2277-496b-84d9-7f1c9ef2365c"
 }
