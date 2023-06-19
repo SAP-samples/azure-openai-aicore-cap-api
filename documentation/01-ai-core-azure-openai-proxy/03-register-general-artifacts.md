@@ -22,16 +22,23 @@ Read the credentials from your AI Core service key file and create an AI API
 client.
 
 ```python
-with open(aic_service_key_path) as ask:
-    aic_service_key = json.load(ask)
+# Load Library
+from ai_core_sdk.ai_core_v2_client import AICoreV2Client
 
-# AI API client that talks to the AI Core instance.
-ai_api_client = AIAPIV2Client(
-    base_url = aic_service_key["serviceurls"]["AI_API_URL"] + "/v2", # The present AI API version is 2
-    auth_url=  aic_service_key["url"] + "/oauth/token",
-    client_id = aic_service_key["clientid"],
-    client_secret = aic_service_key["clientsecret"]
+# Create Connection
+ai_core_client = AICoreV2Client(
+    base_url = "<YOUR_AI_API_URL>" + "/v2", # The present SAP AI Core API version is 2
+    auth_url=  "<YOUR_url>" + "/oauth/token", # Suffix to add
+    client_id = "<YOUR_clientid>",
+    client_secret = "<YOUR_clientsecret>"
 )
+```
+
+## Test connection
+
+```python
+response = ai_core_client.repositories.query()
+print(response.count) # Should return integer value else your values in above step are incorrect
 ```
 
 ## Onboard the Git repository
@@ -40,21 +47,15 @@ You need a git repository on GitHub that contains the workflow files that will b
 training and serving. Onboard this repository by doing the following:
 
 ```python
-with open(git_setup_file_path) as gs:
-		setup_json = json.load(gs)
+# WARNING: Refrain from onboarding again if previously onboarded
+#  else you will get AIAPIServerException 409
 
-repo_json = setup_json["repo"]
-
-response = ai_api_client.rest_client.post(
-		path="/admin/repositories",
-		body={
-            "name": repo_json["name"],
-            "url": repo_json["url"],
-            "username": repo_json["username"],
-            "password": repo_json["password"]
-		}
+ai_core_client.repositories.create(
+    name = "azure-openai-aicore",
+    url = "https://github.com/<YOUR_GITHUB_USERNAME>/azure-openai-aicore-cap-api", # Forked repo
+    username = "<YOUR_GITHUB_USERNAME>",
+    password = "<YOUR_GITHUB_PERSONAL_ACCESS_TOKEN>" # To Generate check: https://developers.sap.com/tutorials/ai-core-helloworld.html#7ab4912e-2277-496b-84d9-7f1c9ef2365c
 )
-print(response)
 ```
 
 ## Register an application
@@ -62,16 +63,20 @@ print(response)
 Register an application for your onboarded repository.
 
 ```python
-app_json = setup_json["app"]
-response = ai_api_client.rest_client.post(
-		path="/admin/applications",
-		body={
-            "applicationName": app_json["applicationName"],
-            "repositoryUrl": app_json["repositoryUrl"],
-            "revision": app_json["revision"],
-            "path": app_json["path"]
-		}
+
+ai_core_client.applications.create(
+    repository_url = "https://github.com/<YOUR_GITHUB_USERNAME>/azure-openai-aicore-cap-api",
+    path = "01-ai-core-azure-openai-proxy/scenario", # Scan this folder for instruction YAML files
+    revision = "HEAD"
 )
+```
+
+```python
+# List scenarios scanned by the application created above
+response = ai_core_client.scenario.query(resource_group='default')
+
+for scenario in response.resources:
+    print(scenario.__dict__)
 ```
 
 ## Docker Secret (optional)
@@ -79,30 +84,35 @@ response = ai_api_client.rest_client.post(
 To register your Docker secret, do the following:
 
 ```python
-with open(docker_secret_file_path) as dsf:
-    docker_secret = json.load(dsf)
+docker_secret = {
+  "name": "docker-credentials",
+  "data": {
+    ".dockerconfigjson": "{\"auths\": {\"https://index.docker.io\": {\"username\": \"<USERNAME>\", \"password\": \"<DOCKER-HUB-PAT-TOKEN>\"}}}"
+  }
+}
 
-pprint(docker_secret)
 
-response = ai_api_client.rest_client.post(
-    path="/admin/dockerRegistrySecrets",
-    body={
-        "name": docker_secret["name"],
-        "data": docker_secret["data"]
-    }
+response = ai_core_client.docker_registry_secrets.create(
+    name = docker_secret["name"],
+    data = docker_secret["data"]
 )
-print(response)
+
+print(response.__dict__)
 ```
 
-## Create a resource group
+## Create a resource group (Optional)
 
 Now, create a resource group. Think of it as a scope for your registered artifacts.
 
+- **For Free Tier AI Core Serice**: you will not be able to create a new resource group. ** A resource group named `default` exists in all systems.** Below code snipet  execution does not impact existing contents.
+- **For paid AI Core service**: If you wish execute this step. You are NOT REQUIRED TO RE-EXECUTE or Redo previous completed steps. Ensure that in the steps that follows modify with your resource group name.
+
+
 ```python
-ai_api_client.rest_client.post(
-    path="/admin/resourceGroups",
-    body={
-        "resourceGroupId": resource_group
-    }
-)
+resource_group_id = "default" # For free tier; `default` exsits in all systems
+# resource_group_id = "my-openai-proxy-ns" # For paid account you can create a namespace aka resource group
+                                              # Other steps 
+
+response = ai_core_client.resource_groups.create(resource_group_id = resource_group_id)
+print(response.__dict__)
 ```
