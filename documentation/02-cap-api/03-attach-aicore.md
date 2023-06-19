@@ -23,7 +23,7 @@ A destination service instance as well as an UAA service instance are attached t
             - Name: openai-aicore-api
               Description: SAP AI Core deployed service
               URL: https://api.ai.prod.eu-central-1.aws.ml.hana.ondemand.com
-              URL.headers.AI-Resource-Group: azure-openai-aicore # your resource group
+              URL.headers.AI-Resource-Group: default # your resource group
               URL.headers.Content-Type: application/json
               Type: HTTP
               ProxyType: Internet
