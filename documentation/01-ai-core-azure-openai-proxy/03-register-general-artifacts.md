@@ -2,7 +2,7 @@
 
 Before you can start to interact with SAP AI Core, you will first need to register different
 artifacts for your AI Core instance. These artifacts include setup details and credentials
-that AI Core needs in order to proceed. Duplicate the json files in the `/resources` directory, enter your attributes as well as credentials and remove the `.sample` appendix to:
+that SAP AI Core needs in order to proceed. Duplicate the json files in the `/resources` directory, enter your attributes as well as credentials and remove the `.sample` appendix to:
 
 - `aic_service_key.json`: Service key of your AI Core instance.
 - `git_setup.json`: Details of this GitHub repository (or yours if you forked) like the repository URL. You are
