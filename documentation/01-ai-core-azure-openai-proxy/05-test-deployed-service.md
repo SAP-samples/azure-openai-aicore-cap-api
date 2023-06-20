@@ -6,10 +6,12 @@ Now that the inference service (proxy) is running, send a request with the promp
 > When it comes to an inference request, make sure to change the **engine** to your deployment id of the respected OpenAI service from Azure.
 
 ```python
+
 legacy_davinci = False # set True if you have a davinci model deployment on Azure OpenAI Services
 if legacy_davinci:
     body = {
-        "engine": "<YOUR ENGINE>", # include your davinci engine from a deployment of an Azure OpenAI services model
+        "engine": "<YOUR ENGINE>", # The deployment name you chose when you deployed the ChatGPT or GPT-4 model.
+                                   #   For information on deployment creation and name Refer article https://learn.microsoft.com/en-us/azure/cognitive-services/openai/how-to/create-resource?pivots=web-portal
         "prompt": "Classify the following news article into 1 of the following categories: categories: [Business, Tech, Politics, Sport, Entertainment]\n\nnews article: Donna Steffensen Is Cooking Up a New Kind of Perfection. The Internet’s most beloved cooking guru has a buzzy new book and a fresh new perspective:\n\nClassified category:",
         "max_tokens": 60,
         "temperature": 0,
@@ -31,8 +33,9 @@ else:
         "stop": "null"
     }
     endpoint = f"{deployment.deployment_url}/v2/chat-completion"
-headers = {"Authorization": ai_api_v2_client.rest_client.get_token(),
-           "ai-resource-group": resource_group,
+
+headers = {"Authorization": ai_core_client.rest_client.get_token(),
+           "ai-resource-group": resource_group_id,
            "Content-Type": "application/json"}
 response = requests.post(endpoint, headers=headers, json=body)
 
@@ -43,13 +46,14 @@ pprint(vars(response))
 Once you are done with testing and you don't need the proxy anymore, you could kill the deployment to save resources, by running this code from [proxy.ipynb](../../01-ai-core-azure-openai-proxy/proxy.ipynb):
 
 ```python
-delete_resp = ai_api_v2_client.deployment.modify(deployment_resp.id,
-                                                 target_status=TargetStatus.STOPPED)
+delete_resp = ai_core_client.deployment.modify(deployment_resp.id,
+                                                 target_status=Status.STOPPED,
+                                              resource_group=resource_group_id)
 status = None
 while status != Status.STOPPED:
     time.sleep(5)
     clear_output(wait=True)
-    deployment = ai_api_v2_client.deployment.get(deployment_resp.id)
+    deployment = ai_core_client.deployment.get(deployment_resp.id, resource_group=resource_group_id)
     status = deployment.status
     print("...... killing deployment ......", flush=True)
     print(f"Deployment status: {deployment.status}")
