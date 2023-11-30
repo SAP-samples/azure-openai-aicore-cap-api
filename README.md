@@ -2,6 +2,9 @@
 
 [![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/azure-openai-aicore-cap-api)](https://api.reuse.software/info/github.com/SAP-samples/azure-openai-aicore-cap-api)
 
+> [!IMPORTANT]
+> Given the recommendation to utilize the [generative AI hub](https://www.sap.com/events/teched/news-guide/ai.html#article8) (General Availability Q4/2023) for foundational model access, we kindly refer to [btp-cap-genai-rag](https://github.com/SAP-samples/btp-cap-genai-rag) to understand the process of establishing a connection from CAP through the Generative AI Hub to Azure OpenAI
+
 With AI Core as a proxy for Azure OpenAI Services, we are able to perform prompt engineering, e.g. to add more context in the form of (SAP) documents or to perform input validation. This sample implements parts of the [Reference architecture of an SAP BTP CAP application using GPT Models of OpenAI](https://github.com/SAP/sap-btp-reference-architectures/tree/main/hyperscalers/openai) and serves as a starting point for such a raw proxy and shows how SAP AI Core can be consumed and exposed via a CAP API.
 
 ![Architectural Parts](documentation/resources/architecture.png)
